@@ -1114,10 +1114,10 @@ th, tr, td {
    color: #a3a4a6;  
 }
 /** 
-/* 12. =contact
+/* 12. =feedback
 /* ==============================;===================================== */
 
-#contact {
+#feedback {
 	background: #12151B;
 	padding-top: 120px;
 	padding-bottom: 138px;
@@ -1125,91 +1125,91 @@ th, tr, td {
 	border-bottom: 1px solid #15191d;  
 }
 
-#contact h3 {
+#feedback h3 {
 	font: 18px/36px "raleway-heavy", sans-serif;
 	color: #8A2426;
 	padding: 0;
 	margin-bottom: 6px;
 }
 
-#contact .left {
+#feedback .left {
 	padding-right: 35px;
 }
 
-#contact .right {
+#feedback .right {
 	padding-left: 35px;
 	position: relative;
 	top: -6px;
 }
 
 /* media queries:  
-/* #contact / .left .right */
+/* #feedback / .left .right */
 
 @media only screen and (max-width:1024px) {
-	#contact .left {
+	#feedback .left {
 		padding-right: 30px;
 	}
 
-	#contact .right {
+	#feedback .right {
 		padding-left: 30px;
 	}
 
 }
 
 @media only screen and (max-width:768px) {
-	#contact .left,
-	#contact .right {
+	#feedback .left,
+	#feedback .right {
 		width: 100%;
 		padding: 0 15px;
 	}
 
-	#contact .right p.lead {
+	#feedback .right p.lead {
 		font: 18px/36px "merriweather-light", serif;
 	}
 
 }
 
 @media only screen and (max-width:600px) {
-	#contact .left,
-	#contact .right {
+	#feedback .left,
+	#feedback .right {
 		padding: 0 10px;
 	}
 
-	#contact .right p.lead {
+	#feedback .right p.lead {
 		font: 17px/33px "merriweather-light", serif;
 	}
 
 }
 
 @media only screen and (max-width:400px) {
-	#contact .left,
-	#contact .right {
+	#feedback .left,
+	#feedback .right {
 		padding: 0;
 	}
 
 }
 
-/* contact form */
-#contact form {
+/* feedback form */
+#feedback form {
 	margin-top: 12px;
 	margin-bottom: 30px;
 }
 
-#contact form div {
+#feedback form div {
 	position: relative;
 }
 
-#contact form div:before,
-#contact form div:after {
+#feedback form div:before,
+#feedback form div:after {
 	content: "";
 	display: table;
 }
 
-#contact form div:after {
+#feedback form div:after {
 	clear: both;
 }
 
-#contact form div label {
+#feedback form div label {
 	font: 11px/24px "raleway-bold", sans-serif;
 	position: absolute;
 	bottom: 3px;
@@ -1227,12 +1227,16 @@ input[type="companyName"],
 input[type="address"],
 input[type="password"],
 input[type="mobile"],
-#contact textarea,
-#contact select {
+#feedback textarea,
+#feedback select {
 	width: 100%;
 }
 
-#contact button.submitform {
+#feedback textarea {
+	max-height: 50px !important;
+}
+
+#feedback button.submitform {
 	font: 15px/30px "raleway-heavy", sans-serif;
 	text-transform: uppercase;
 	position: relative;

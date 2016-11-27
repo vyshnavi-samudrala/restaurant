@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
 <!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
-<head>
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]--><head>
 
    <!--- basic page needs
    ================================================== -->
@@ -20,6 +19,7 @@
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="css/base.css">
 	<link rel="stylesheet" href="css/main.css">     
+	<link rel="stylesheet" href="css/rating.css">     
 
    <!-- script
    ================================================== -->
@@ -243,9 +243,139 @@ $locality = join(" ", $locality);
     </div> <!--End of container -->
 </section> <!-- end section about us -->
 
-<section>
+<?php 
+	$feedback = "INSERT INTO restaurant.ratings (firstname, lastname, email) VALUES (?, ?, ?)";
+	$feedback_stmt = $mysqli->prepare($feedback);
 
-  <div id="stars" style="font-size:26px;" class="starrr"></div>
+	if (!$feedback_stmt->bind_param("ss", $restaurant, $locality) || !$feedback_stmt->execute()) {
+		throw new Exception("Database error:". $rest_stmt->errno - $rest_stmt->error);
+	}
+	$results = $fetcher_obj->fetch_assoc_stmt($rest_stmt);
+	$rest_stmt->close();
+?>
+<section id="feedback">
+   <div class="container">
+    <div class="row section-head">
+
+   		<div class="twelve columns">
+
+	         <h1>Reviews<span>.</span></h1>
+
+	         <hr />	        
+
+	      </div>
+
+      </div> <!-- end section-head -->
+<div class="row">
+<div class="col-md-7 col-md-offset-1">
+<div class="panel">
+	<div class="panel-heading" style="background-color:#15191d;">
+		<div class="rating" style="float:right">
+                                 <?php if($result['overall_rating']==0) { ?>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1
+								   elseif($result['overall_rating']==0.5) { ?>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1
+								   elseif($result['overall_rating']==1) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 
+								   elseif($result['overall_rating']==1.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==2) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 
+								   elseif($result['overall_rating']==2.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==3) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 
+								  elseif($result['overall_rating']==3.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==4) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==4.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                    <small></small>
+                                </div>                
+    	<?php ?>
+        review starts!
+    </div>
+</div>
+</div>
+</div>
+<hr>
+<div class="row">
+<div class="col-md-7 col-md-offset-1">
+	<h4> Leave us a feedback: </h4>
+    <form name="reviews_form" method="post" action="">
+    <input id="rating_stars" name="rating_stars" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false">
+
+    <div class="form-group">
+        <textarea class="form-control" style="height:50px !important" name="review" rows="5"></textarea>
+	</div>        
+        <input type="submit" id="submit_review">
+    </form>
+</div>
+</div>
 </section>
 
    <!-- Footer
@@ -275,17 +405,18 @@ $locality = join(" ", $locality);
    ================================================== --> 
    <script src="js/jquery-1.11.3.min.js"></script>
    <script src="js/rating_stars.js"></script>
-   <script src="js/jquery-migrate-1.2.1.min.js"></script>
-   <script src="js/jquery.flexslider-min.js"></script>
-   <script src="js/jquery.waypoints.min.js"></script>
+
    <script src="js/jquery.validate.min.js"></script>
-   <script src="js/jquery.fittext.js"></script>
-   <script src="js/jquery.placeholder.min.js"></script>
+
 
 
 <script type="text/javascript">
 $( ".nav-submit-button" ).click(function() {
 	$("#nav_form").submit();
+});
+
+$(function() {
+	$("#rating_stars").rating();
 });
 </script>
 </body>
