@@ -146,7 +146,7 @@ $locality = join(" ", $locality);
 			</div>
             <div class="row" style="width:100%;">
 				<div style="float:left">Overall Rating: &nbsp;</div>
-                		<div class="rating" style="font-size:24px">
+                		<div class="rating" style="font-size:24px;display: -webkit-inline-box;">
                                  <?php if($result['overall_rating']==0) { ?>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -275,7 +275,7 @@ foreach($feedback_results as $feedback) {
 <div class="panel" style="border:1px solid #BCBCBC">
 	<div class="panel-heading" style="background-color:#15191d; width:100%;">
     	"<?php echo $feedback['reviews_text'];?>"
-		<div class="rating" style="float:right; font-size:18px;">
+		<div class="rating" style="float:right; font-size:18px;display: -webkit-inline-box;">
                                  <?php if($feedback['stars']==0) { ?>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
@@ -377,7 +377,7 @@ foreach($feedback_results as $feedback) {
         <textarea style="height:50px !important" name="review_text" id="review_text" title="review_text" rows="5"></textarea>
 
     	<input type="hidden" value="<?php echo $r_id;?>" name="r_id" id="r_id">
-        <input type="submit" id="submit_review">
+        <div align="center"><input type="submit" id="submit_review"></div>
     </form>
 </div>
 
