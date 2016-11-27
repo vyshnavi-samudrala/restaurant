@@ -244,6 +244,16 @@ $locality = join(" ", $locality);
     </div> <!--End of container -->
 </section> <!-- end section about us -->
 
+<?php 
+	$feedback = "SELECT * FROM restaurant.reviews_table WHERE r_id=?";
+	$feedback_stmt = $mysqli->prepare($feedback);
+
+	if (!$feedback_stmt->bind_param("s", $r_id) || !$feedback_stmt->execute()) {
+		throw new Exception("Database error:". $feedback_stmt->errno - $feedback_stmt->error);
+	}
+	$feedback_results = $fetcher_obj->fetch_assoc_stmt($feedback_stmt);
+	$feedback_stmt->close();
+?>
 <section id="feedback">
    <div class="container">
     <div class="row section-head">
@@ -259,31 +269,35 @@ $locality = join(" ", $locality);
       </div> <!-- end section-head -->
 <div class="row">
 <div class="col-md-7 col-md-offset-1" id="reviews_div_sec">
-<div class="panel">
-	<div class="panel-heading" style="background-color:#15191d;">
-		<div class="rating" style="float:right">
-                                 <?php if($result['overall_rating']==0) { ?>
+<?php 
+foreach($feedback_results as $feedback) {
+?>
+<div class="panel" style="border:1px solid #BCBCBC">
+	<div class="panel-heading" style="background-color:#15191d; width:100%;">
+    	"<?php echo $feedback['reviews_text'];?>"
+		<div class="rating" style="float:right; font-size:18px;">
+                                 <?php if($feedback['stars']==0) { ?>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1
-								   elseif($result['overall_rating']==0.5) { ?>
+								   elseif($feedback['stars']==0.5) { ?>
                                     <i class="fa fa-star-half-empty voted"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1
-								   elseif($result['overall_rating']==1) { ?>
+								   elseif($feedback['stars']==1) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1 
-								   elseif($result['overall_rating']==1.5) { ?>
+								   elseif($feedback['stars']==1.5) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star-half-empty voted"></i>
                                     <i class="fa fa-star-o"></i>
@@ -291,14 +305,14 @@ $locality = join(" ", $locality);
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1 ?>
                                     
-                                 <?php if($result['overall_rating']==2) { ?>
+                                 <?php if($feedback['stars']==2) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1 
-								   elseif($result['overall_rating']==2.5) { ?>
+								   elseif($feedback['stars']==2.5) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star-half-empty voted"></i>
@@ -306,14 +320,14 @@ $locality = join(" ", $locality);
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1 ?>
                                     
-                                 <?php if($result['overall_rating']==3) { ?>
+                                 <?php if($feedback['stars']==3) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1 
-								  elseif($result['overall_rating']==3.5) { ?>
+								  elseif($feedback['stars']==3.5) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
@@ -321,7 +335,7 @@ $locality = join(" ", $locality);
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1 ?>
                                     
-                                 <?php if($result['overall_rating']==4) { ?>
+                                 <?php if($feedback['stars']==4) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
@@ -329,7 +343,7 @@ $locality = join(" ", $locality);
                                     <i class="fa fa-star-o"></i>
                                   <?php }//if 1 ?>
                                     
-                                 <?php if($result['overall_rating']==4.5) { ?>
+                                 <?php if($feedback['stars']==4.5) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
@@ -337,7 +351,7 @@ $locality = join(" ", $locality);
                                     <i class="fa fa-star-half-empty voted"></i>
                                   <?php }//if 1 ?>
                                     
-                                 <?php if($result['overall_rating']==5) { ?>
+                                 <?php if($feedback['stars']==5) { ?>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
                                     <i class="fa fa-star voted"></i>
@@ -347,10 +361,9 @@ $locality = join(" ", $locality);
                                     
                                     <small></small>
                                 </div>                
-    	<?php ?>
-        review starts!
     </div>
 </div>
+<?php }//foreach?>
 </div>
 </div>
 <hr>
@@ -404,7 +417,8 @@ $locality = join(" ", $locality);
    <script src="js/rating_stars.js"></script>
 <script type="text/javascript">
 $(function() {
-	$('#submit_review').on('click', function () {
+	$('#submit_review').on('click', function (event) {
+		event.preventDefault();
 		//var da = $("#reviews_form").find('input, select, textarea, button').serialize();
 //alert($('textarea#review_text').text());
 
@@ -418,6 +432,7 @@ $(function() {
 	    success: function (data) {
                // alert('form was submitted');
 				console.log(data);
+				$( ".content" ).append( data );
             },
       complete: function(){
        // $('#loading').hide();
