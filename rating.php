@@ -1,7 +1,6 @@
 <?php 
-echo $review = json_decode($_POST['review_text'], true);
-echo "<br>
-";
+echo $review = $_POST['review_text'];
+//echo "<br>";
 echo $r_id = json_decode($_POST['r_id'], true);
 echo $stars = json_decode($_POST['rating_stars'], true);
 

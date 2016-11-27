@@ -360,10 +360,9 @@ $locality = join(" ", $locality);
     <form name="reviews_form" id="reviews_form" method="post" action="">
     <input id="rating_stars" name="rating_stars" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false">
 
-    <div class="form-group">
-        <textarea class="form-control" style="height:50px !important" name="review_text" rows="5"></textarea>
-	</div>     
-    	<input type="hidden" value="<?php echo $r_id;?>" name="r_id">
+        <textarea style="height:50px !important" name="review_text" id="review_text" title="review_text" rows="5"></textarea>
+
+    	<input type="hidden" value="<?php echo $r_id;?>" name="r_id" id="r_id">
         <input type="submit" id="submit_review">
     </form>
 </div>
@@ -407,15 +406,17 @@ $locality = join(" ", $locality);
 $(function() {
 	$('#submit_review').on('click', function () {
 		//var da = $("#reviews_form").find('input, select, textarea, button').serialize();
-		//alert(da);
+//alert($('textarea#review_text').text());
+
 		$.ajax({
 			async: true,
             type: 'post',
             url: 'rating.php',
 			data: $("#reviews_form").find('input, select, textarea, button').serialize(),
+			//data: {r_id: $('#r_id').val(),review_text: $('textarea#review_text').val(),rating_stars: $('#rating_stars').val()},
  		error: function(req, err){ console.log('my message ' + err); },
 	    success: function (data) {
-                alert('form was submitted');
+               // alert('form was submitted');
 				console.log(data);
             },
       complete: function(){
