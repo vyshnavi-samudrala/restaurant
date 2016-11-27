@@ -15,31 +15,28 @@ $stars = json_decode($_POST['rating_stars'], true);
 	if (!$feedback_stmt->bind_param("ids", $r_id, $stars, $review) || !$feedback_stmt->execute()) {
 		throw new Exception("Database error:". $feedback_stmt->errno - $feedback_stmt->error);
 	}
-	//$results = $fetcher_obj->fetch_assoc_stmt($feedback_stmt);
-
 
 	$last_id = $feedback_stmt->insert_id;
 	$feedback_stmt->close();
 	
 	
-	
-	
-//to get the new inserted review-===========================	
-	
-	
+
+
+
+	$fetcher_obj = new fetcher();
 	$new_feedback = "SELECT * FROM restaurant.reviews_table where rev_id = ?";
 	$new_feedback_stmt = $mysqli->prepare($new_feedback);
 
 //print_r($feedback_stmt);
-	if (!$new_feedback_stmt->bind_param("i", $r_id) || !$new_feedback_stmt->execute()) {
+	if (!$new_feedback_stmt->bind_param("i", $last_id) || !$new_feedback_stmt->execute()) {
 		throw new Exception("Database error:". $new_feedback_stmt->errno - $new_feedback_stmt->error);
 	}
 	
-	$feedback_results = $fetcher_obj->fetch_assoc_stmt($feedback_stmt);
+	$feedback_results = $fetcher_obj->fetch_assoc_stmt($new_feedback_stmt);
 	$new_feedback_stmt->close();
+//print_r($feedback_results);
 
-
-		foreach($feedback_results as $feedback) {
+	foreach($feedback_results as $feedback) {
 ?>
 
 <div class="panel" style="border:1px solid #BCBCBC">
@@ -135,6 +132,5 @@ $stars = json_decode($_POST['rating_stars'], true);
 </div>
 
 <?php			
-		}
+		} 
 ?>
-

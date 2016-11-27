@@ -431,8 +431,8 @@ $(function() {
  		error: function(req, err){ console.log('my message ' + err); },
 	    success: function (data) {
                // alert('form was submitted');
+				$('#reviews_div_sec').append( data );
 				console.log(data);
-				$( ".content" ).append( data );
             },
       complete: function(){
        // $('#loading').hide();
