@@ -366,9 +366,10 @@ foreach($feedback_results as $feedback) {
 <?php }//foreach?>
 </div>
 </div>
-<hr>
-<div class="row" id="leave_feedback">
-<div class="col-md-7 col-md-offset-1">
+<div class="col-md-7 col-md-offset-1" id="leave_feedback">
+<?php if(count($feedback_results)) {?>
+<hr />
+<?php }//display only if there are some feedbacks to differentiate the form?>
 	<h4> Leave us a feedback: </h4>
     <form name="reviews_form" id="reviews_form" method="post" action="">
     <input id="rating_stars" name="rating_stars" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false">
@@ -379,7 +380,7 @@ foreach($feedback_results as $feedback) {
         <input type="submit" id="submit_review">
     </form>
 </div>
-</div>
+
 </section>
 
    <!-- Footer
@@ -432,7 +433,7 @@ $(function() {
 	    success: function (data) {
                // alert('form was submitted');
 			   $("#reviews_form")[0].reset();
-			   $("#leave_feedback").hide();
+			   //$("#leave_feedback").html("Thank you for leaving us feedback");
 			   
 				$('#reviews_div_sec').append( data );
 				console.log(data);
