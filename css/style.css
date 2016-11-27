@@ -1,0 +1,146 @@
+body {
+width:auto;
+}
+
+.txt-heading {
+padding: 5px;
+font-size: 20px;
+font-weight:bold;
+color:#FFFFFF;
+}
+
+#btnEmpty {
+background-color:#8A2426;
+border:0;
+padding:3px 20px 3px 20px;
+color:#FFF;
+font-size:0.8em;
+font-weight:normal;
+float: left;
+text-decoration:none;
+}
+#btnEmpty:hover {
+	color: #000;
+	background-color: #FFF;
+}
+#btnAction {
+background-color:#8A2426;
+border:0;
+padding:4px 20px 4px 20px;
+color:#FFF;
+font-size:0.8em;
+font-weight:normal;
+text-decoration:none;
+}
+#btnAction:hover {
+	color: #000;
+	background-color: #FFF;
+}
+
+.txt-heading .btnEmpty a:hover {
+	color: #000000;
+	background-color: #FFFFFF;
+}
+
+.btnAddAction {
+background-color: #8A2426;
+border:0;
+margin-left:1px;
+padding:3px 20px 3px 20px;
+color:#FFF;
+font-size:0.8em;
+font-weight:normal;
+text-decoration:none;
+}
+
+
+#shopping-cart  {
+padding: 100px 0px 80px 80px;
+margin-bottom:30px;
+}
+
+#shopping-cart table {
+width:100%;
+}
+
+.cart-item  {
+padding: 10px;
+}
+
+#product-grid  {
+padding-top: 50px;
+margin-bottom: 30px;
+}
+.container {
+	width: auto;
+}
+
+/* MENU */
+#menu {
+	padding-top: 80px;
+	padding-bottom: 138px;
+	overflow: hidden;
+	border-bottom: 1px solid #15191d;  
+}
+table {
+	align-content: center;
+	table-layout: auto;
+}
+table, th,tr {
+    border: 0;
+	text-align:center;
+    border-collapse:  collapse;
+}
+.tr {
+	word-break:break-strict;
+}
+.table-responsive {
+	overflow: hidden;
+}
+th {
+	width: 200px;
+	padding: 2px;
+	border: 0;
+	text-align:justify;
+}
+ tr, td {
+	width:auto;
+	border:0;
+	padding: 5px;
+    padding-right: 20px;
+	overflow:auto;
+    text-align: justify;
+}
+
+.product-item  {
+	float:left;
+	margin:15px;
+	padding:5px;
+	max-height: 800px;
+	text-align: center;
+}
+
+.product-item div {
+margin:10px;
+}
+
+.product-image  {
+height: 50px;
+padding-bottom: 350px;
+}
+.product-description {
+	max-height: 200px;
+	max-width: 300px;
+	word-break:break-all;
+	text-align: center;
+	padding-bottom: 200px;
+}
+.quantity {
+	float: left;
+}
+.headings {
+	text-align: center;
+}
+.total {
+	padding-left: 200px;
+}

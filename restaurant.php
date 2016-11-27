@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+
+   <!--- basic page needs
+   ================================================== -->
+   <meta charset="utf-8">
+	<title>FIND RESTAURANTS</title>
+
+
+   <!-- mobile specific metas
+   ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+ 	<!-- CSS
+   ================================================== -->
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/main.css">     
+
+   <!-- script
+   ================================================== -->
+	<script src="js/modernizr.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+
+   <!-- favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+	<!-- header
+   ================================================== -->
+   <header id="main-header" style="position:absolute">
+
+   	<div class="row">
+
+	      <div class="logo">
+	         <a href="index.html">Restaurant Finder</a>
+	      </div>
+
+	      <nav id="nav-wrap">         
+	         
+	         <a class="mobile-btn" href="#nav-wrap" title="Show navigation">
+	         	<span class="menu-icon">Menu</span>
+	         </a>
+         	<a class="mobile-btn" href="#" title="Hide navigation">
+         		<span class="menu-icon">Menu</span>
+         	</a>            
+
+	      </nav> <!-- end #nav-wrap -->
+       
+          </div>
+
+   </header> <!-- end header -->
+
+
+   <!-- homepage hero
+   ================================================== -->
+   <section id="hero" style="min-height:80px;">	
+   	  
+ 	  <div class="hero-content" id="search_bar_container" style="z-index:9999;">
+		<div class="container">
+			<div class="search_bar">
+        <form action="index.php" method="get" id="nav_form" style="margin:0;">
+				<select title="Search in" class="searchSelect" id="searchDropdownBox" name="search_city">
+                    <option <?php if($_GET['search_city']=='Chennai') echo "selected='selected'";?> value="Chennai"  title="Chennai">Chennai</option>
+                    <option <?php if($_GET['search_city']=='Hyderabad') echo "selected='selected'";?> value="Hyderabad" title="Hyderabad">Hyderabad</option>
+                    <option <?php if($_GET['search_city']=='Mumbai') echo "selected='selected'";?> value="Mumbai" title="Mumbai">Mumbai</option>
+                    <option <?php if($_GET['search_city']=='Delhi') echo "selected='selected'";?> value="Delhi" title="Delhi">Delhi</option>
+                    <option <?php if($_GET['search_city']=='Bangalore') echo "selected='selected'";?> value="Bangalore" title="Bangalore">Bangalore</option>
+				</select>
+                
+				<div class="nav-searchfield-outer">
+				<input type="text" autocomplete="off" value="<?php echo $_GET['search_rstrnt'];?>" style="padding-left:130px; background-color:#fff;" name="search_rstrnt" placeholder="Find Restaurants...">
+				</div>
+				<div class="nav-submit-button">
+				<input type="submit" id="submit_nav_form" onClick="this.form.submit();" value="Search">
+				</div>
+		</form>
+			</div><!-- End search_bar-->
+		</div><!-- End Container-->
+	</div><!-- /search_barcontainer-->
+
+   </section> <!-- end homepage hero -->
+   
+
+   
+     <!-- About us
+   ================================================== -->
+   <section id="about">
+   <div class="container">
+	<div class="content">
+<?php 
+include "inc/config.php";
+include "inc/mysqli_funs.php";
+
+
+$url = $_GET['restaurant'];
+$url = explode("-", $url);
+
+
+$index = array_search("in",$url);
+$restaurant = array_slice($url, 0, $index);
+end($url);
+$key = key($url);
+$locality = array_slice($url, $index+1, $key);
+
+$restaurant = join(" ", $restaurant);
+$locality = join(" ", $locality);
+
+
+	$fetcher_obj = new fetcher();
+	$rest = "SELECT * FROM restaurant.restaurants WHERE r_name=? and r_locality=?";
+	$rest_stmt = $mysqli->prepare($rest);
+
+	if (!$rest_stmt->bind_param("ss", $restaurant, $locality) || !$rest_stmt->execute()) {
+		throw new Exception("Database error:". $rest_stmt->errno - $rest_stmt->error);
+	}
+	$results = $fetcher_obj->fetch_assoc_stmt($rest_stmt);
+	$rest_stmt->close();
+	//print_r($results);
+	
+	foreach($results as $result) {
+		?>
+
+<div style="width:750px; height:450px; float:left; vertical-align:middle; margin-right:1.2em"><img style="width:100%; height:100%;" src="<?php echo $result['r_picture'];?>"></div>
+			<div style="float:left; display:inline-block; vertical-align:top;">                    
+                <a href="javascript:void(0);" class="rstrnt_link" style="display:block; font-size:34px">
+                    <?php echo $result['r_name']?>
+                </a>
+			<div class="row" style="display:flex; float:left">  
+                <div style="margin-right:2em;">
+                    <?php echo $result['r_city'];?>
+                </div>
+                <div style="display:inline-table">
+                    <?php echo $result['r_locality'];?>
+                </div>
+			</div>
+            <div class="row" style="width:100%;">
+				<div style="float:left">Overall Rating: &nbsp;</div>
+                		<div class="rating" style="font-size:24px">
+                                 <?php if($result['overall_rating']==0) { ?>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1
+								   elseif($result['overall_rating']==0.5) { ?>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1
+								   elseif($result['overall_rating']==1) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 
+								   elseif($result['overall_rating']==1.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==2) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 
+								   elseif($result['overall_rating']==2.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==3) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 
+								  elseif($result['overall_rating']==3.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==4) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-o"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==4.5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star-half-empty voted"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                 <?php if($result['overall_rating']==5) { ?>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                    <i class="fa fa-star voted"></i>
+                                  <?php }//if 1 ?>
+                                    
+                                    <small></small>
+                                </div>                
+            </div>
+			</div>
+		</div>
+        <?php
+	}
+?>  
+  
+  
+    </div> <!--End of container -->
+</section> <!-- end section about us -->
+
+<section>
+
+  <div id="stars" style="font-size:26px;" class="starrr"></div>
+</section>
+
+   <!-- Footer
+   ================================================== -->
+   <footer>
+
+      <div class="row">  
+
+      	<div class="twelve columns content group">
+      		
+				<ul class="social-links">
+               <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+               <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+               <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>               
+            </ul>
+      	</div>           
+
+         <div id="go-top">
+            <a class="smoothscroll" title="Back to Top" href="#hero">Back to Top<i class="fa fa-angle-up"></i></a>
+         </div>
+
+      </div> <!-- end row -->
+
+   </footer> <!-- end footer -->
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="js/jquery-1.11.3.min.js"></script>
+   <script src="js/rating_stars.js"></script>
+   <script src="js/jquery-migrate-1.2.1.min.js"></script>
+   <script src="js/jquery.flexslider-min.js"></script>
+   <script src="js/jquery.waypoints.min.js"></script>
+   <script src="js/jquery.validate.min.js"></script>
+   <script src="js/jquery.fittext.js"></script>
+   <script src="js/jquery.placeholder.min.js"></script>
+
+
+<script type="text/javascript">
+$( ".nav-submit-button" ).click(function() {
+	$("#nav_form").submit();
+});
+</script>
+</body>
+
+</html>

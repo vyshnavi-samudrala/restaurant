@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="no-js oldie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="no-js oldie ie9" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+
+   <!--- basic page needs
+   ================================================== -->
+   <meta charset="utf-8">
+	<title>FIND RESTAURANTS</title>
+
+
+   <!-- mobile specific metas
+   ================================================== -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+ 	<!-- CSS
+   ================================================== -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/base.css">
+	<link rel="stylesheet" href="css/main.css">     
+
+   <!-- script
+   ================================================== -->
+	<script src="js/modernizr.js"></script>
+    <script src="js/jquery-1.11.3.min.js"></script>
+
+   <!-- favicons
+	================================================== -->
+	<link rel="shortcut icon" href="images/favicon.ico" >
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+	<!-- header
+   ================================================== -->
+   <header id="main-header" style="position:absolute">
+
+   	<div class="row">
+
+	      <div class="logo">
+	         <a href="index.html">Restaurant Finder</a>
+	      </div>
+
+	      <nav id="nav-wrap">         
+	         
+	         <a class="mobile-btn" href="#nav-wrap" title="Show navigation">
+	         	<span class="menu-icon">Menu</span>
+	         </a>
+         	<a class="mobile-btn" href="#" title="Hide navigation">
+         		<span class="menu-icon">Menu</span>
+         	</a>            
+
+	      </nav> <!-- end #nav-wrap -->
+       
+          </div>
+
+   </header> <!-- end header -->
+
+
+   <!-- homepage hero
+   ================================================== -->
+   <section id="hero">	
+   	  
+ 	  <div class="hero-content" id="search_bar_container" style="z-index:9999;">
+		<div class="container">
+			<div class="search_bar">
+        <form action="index.php" method="post" id="nav_form" style="margin:0;">
+				<select title="Search in" class="searchSelect" id="searchDropdownBox" name="search_city" style="">
+                    <option value="Chennai"  title="Chennai">Chennai</option>
+                    <option value="Hyderabad" title="Hyderabad">Hyderabad</option>
+                    <option value="Mumbai" title="Mumbai">Mumbai</option>
+                    <option value="Delhi" title="Delhi">Delhi</option>
+                    <option value="Bangalore" title="Bangalore">Bangalore</option>
+				</select>
+                
+				<div class="nav-searchfield-outer">
+				<input type="text" autocomplete="off" style="padding-left:130px; background-color:#fff;" name="search_rstrnt" placeholder="Find Restaurants...">
+				</div>
+				<div class="nav-submit-button">
+				<input type="submit" id="submit_nav_form" onClick="this.form.submit();" value="Search">
+				</div>
+		</form>
+			</div><!-- End search_bar-->
+		</div><!-- End Container-->
+	</div><!-- /search_barcontainer-->
+
+   </section> <!-- end homepage hero -->
+   
+
+   
+     <!-- About us
+   ================================================== -->
+   <section id="about">
+   <div class="container">
+    <div class="row section-head">
+
+   		<div class="twelve columns">
+
+	         <h1>Restaurants<span>.</span></h1>
+
+	         <hr />	        
+
+	      </div>
+
+      </div> <!-- end section-head -->
+	<div class="content">
+    <div class="col-md-8 col-md-offset-1">
+		<div class="panel panel-default rstrnts_div">
+        <a href="#" class="rstrnt_link">
+        	<div class="panel-heading">name</div>
+        </a>
+        <div class="panel-body">
+            asa
+        </div>
+        </div>
+	</div>
+    </div>
+    </div> <!--End of container -->
+</section> <!-- end section about us -->
+
+
+   <!-- Footer
+   ================================================== -->
+   <footer>
+
+      <div class="row">  
+
+      	<div class="twelve columns content group">
+      		
+				<ul class="social-links">
+               <li><a href="#"><i class="fa fa-facebook-square"></i></a></li>
+               <li><a href="#"><i class="fa fa-twitter-square"></i></a></li>
+               <li><a href="#"><i class="fa fa-google-plus-square"></i></a></li>               
+            </ul>
+      	</div>           
+
+         <div id="go-top">
+            <a class="smoothscroll" title="Back to Top" href="#hero">Back to Top<i class="fa fa-angle-up"></i></a>
+         </div>
+
+      </div> <!-- end row -->
+
+   </footer> <!-- end footer -->
+
+   <!-- Java Script
+   ================================================== --> 
+   <script src="js/jquery-1.11.3.min.js"></script>
+   <script src="js/jquery-migrate-1.2.1.min.js"></script>
+   <script src="js/jquery.flexslider-min.js"></script>
+   <script src="js/jquery.waypoints.min.js"></script>
+   <script src="js/jquery.validate.min.js"></script>
+   <script src="js/jquery.fittext.js"></script>
+   <script src="js/jquery.placeholder.min.js"></script>
+
+
+<script type="text/javascript">
+$( ".nav-submit-button" ).click(function() {
+	$("#nav_form").submit();
+});
+</script>
+</body>
+
+</html>
