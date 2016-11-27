@@ -367,7 +367,7 @@ foreach($feedback_results as $feedback) {
 </div>
 </div>
 <hr>
-<div class="row">
+<div class="row" id="leave_feedback">
 <div class="col-md-7 col-md-offset-1">
 	<h4> Leave us a feedback: </h4>
     <form name="reviews_form" id="reviews_form" method="post" action="">
@@ -431,6 +431,9 @@ $(function() {
  		error: function(req, err){ console.log('my message ' + err); },
 	    success: function (data) {
                // alert('form was submitted');
+			   $("#reviews_form")[0].reset();
+			   $("#leave_feedback").hide();
+			   
 				$('#reviews_div_sec').append( data );
 				console.log(data);
             },
