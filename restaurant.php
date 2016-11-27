@@ -236,6 +236,7 @@ $locality = join(" ", $locality);
 			</div>
 		</div>
         <?php
+		$r_id = $result['r_id']; 
 	}
 ?>  
   
@@ -243,16 +244,6 @@ $locality = join(" ", $locality);
     </div> <!--End of container -->
 </section> <!-- end section about us -->
 
-<?php 
-	$feedback = "INSERT INTO restaurant.ratings (firstname, lastname, email) VALUES (?, ?, ?)";
-	$feedback_stmt = $mysqli->prepare($feedback);
-
-	if (!$feedback_stmt->bind_param("ss", $restaurant, $locality) || !$feedback_stmt->execute()) {
-		throw new Exception("Database error:". $rest_stmt->errno - $rest_stmt->error);
-	}
-	$results = $fetcher_obj->fetch_assoc_stmt($rest_stmt);
-	$rest_stmt->close();
-?>
 <section id="feedback">
    <div class="container">
     <div class="row section-head">
@@ -267,7 +258,7 @@ $locality = join(" ", $locality);
 
       </div> <!-- end section-head -->
 <div class="row">
-<div class="col-md-7 col-md-offset-1">
+<div class="col-md-7 col-md-offset-1" id="reviews_div_sec">
 <div class="panel">
 	<div class="panel-heading" style="background-color:#15191d;">
 		<div class="rating" style="float:right">
@@ -366,12 +357,13 @@ $locality = join(" ", $locality);
 <div class="row">
 <div class="col-md-7 col-md-offset-1">
 	<h4> Leave us a feedback: </h4>
-    <form name="reviews_form" method="post" action="">
+    <form name="reviews_form" id="reviews_form" method="post" action="">
     <input id="rating_stars" name="rating_stars" class="rating" data-size="xs" data-show-clear="false" data-show-caption="false">
 
     <div class="form-group">
-        <textarea class="form-control" style="height:50px !important" name="review" rows="5"></textarea>
-	</div>        
+        <textarea class="form-control" style="height:50px !important" name="review_text" rows="5"></textarea>
+	</div>     
+    	<input type="hidden" value="<?php echo $r_id;?>" name="r_id">
         <input type="submit" id="submit_review">
     </form>
 </div>
@@ -403,18 +395,45 @@ $locality = join(" ", $locality);
 
    <!-- Java Script
    ================================================== --> 
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+
+
    <script src="js/jquery-1.11.3.min.js"></script>
    <script src="js/rating_stars.js"></script>
-
-   <script src="js/jquery.validate.min.js"></script>
-
-
+<script type="text/javascript">
+$(function() {
+	$('#submit_review').on('click', function () {
+		//var da = $("#reviews_form").find('input, select, textarea, button').serialize();
+		//alert(da);
+		$.ajax({
+			async: true,
+            type: 'post',
+            url: 'rating.php',
+			data: $("#reviews_form").find('input, select, textarea, button').serialize(),
+ 		error: function(req, err){ console.log('my message ' + err); },
+	    success: function (data) {
+                alert('form was submitted');
+				console.log(data);
+            },
+      complete: function(){
+       // $('#loading').hide();
+      }
+          });
+		  
+	 });
+});
+</script>
 
 <script type="text/javascript">
 $( ".nav-submit-button" ).click(function() {
 	$("#nav_form").submit();
 });
+</script>
 
+<script>
 $(function() {
 	$("#rating_stars").rating();
 });
