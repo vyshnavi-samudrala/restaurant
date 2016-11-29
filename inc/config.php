@@ -1,7 +1,7 @@
 <?php
 
    	$db_user = 'root';
-	$db_pass = 'SiriVaishu57';
+	$db_pass = '';
 	$db_n = 'restaurant';
 	$db_hoster = 'localhost';
 	$item_per_page = 6;
